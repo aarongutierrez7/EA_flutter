@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/screens/login_screen.dart';
 import 'package:flutter_project/screens/signup_screen.dart';
+import 'package:flutter_project/screens/menu_screen.dart';
+import 'package:flutter_project/screens/dashboard_screen.dart';
+
 //import 'package:routing_prep/main.dart';
 
 class RouteGenerator {
@@ -17,6 +20,12 @@ class RouteGenerator {
       case '/signup':
         // Validation of correct data type
         return MaterialPageRoute(builder: (_) => SignUpScreen());
+      case '/sidebar':
+        // Validation of correct data type
+        return MaterialPageRoute(builder: (_) => NavBar());
+      case '/dashboard':
+        // Validation of correct data type
+        return MaterialPageRoute(builder: (_) => HomeScreen());
 
       // If args is not of the correct type, return an error page.
       // You can also throw an exception while in development.

@@ -2,6 +2,9 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project/config.dart';
+import 'package:flutter_project/models/login_request_model.dart';
+import 'package:flutter_project/services/api_service.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
@@ -15,10 +18,10 @@ class LogInScreen extends StatefulWidget {
 
 class _LogInScreenState extends State<LogInScreen> {
   bool isAPIcallProcess = false;
-  bool hidePassword = true;
+  bool hidepsswrd = true;
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
-  String? username;
-  String? password;
+  String? email;
+  String? psswrd;
 
   @override
   Widget build(BuildContext context) {
@@ -90,16 +93,16 @@ class _LogInScreenState extends State<LogInScreen> {
           FormHelper.inputFieldWidget(
             context,
             const Icon(Icons.person),
-            "username",
-            "UserName",
+            "Email",
+            "Email",
             (onValidateVal) {
               if (onValidateVal.isEmpty) {
-                return "Username can\'t be empty";
+                return "Email can\'t be empty";
               }
               return null;
             },
             (onSaveVal) {
-              username = onSaveVal;
+              email = onSaveVal;
             },
             borderFocusColor: Colors.white,
             prefixIconColor: Colors.white,
@@ -111,14 +114,14 @@ class _LogInScreenState extends State<LogInScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: FormHelper.inputFieldWidget(
-                context, const Icon(Icons.lock), "password", "Password",
+                context, const Icon(Icons.lock), "Password", "Password",
                 (onValidateVal) {
               if (onValidateVal.isEmpty) {
                 return "Password can\'t be empty";
               }
               return null;
             }, (onSaveVal) {
-              password = onSaveVal;
+              psswrd = onSaveVal;
             },
                 borderFocusColor: Colors.white,
                 prefixIconColor: Colors.white,
@@ -126,17 +129,16 @@ class _LogInScreenState extends State<LogInScreen> {
                 textColor: Colors.white,
                 hintColor: Colors.white.withOpacity(0.6),
                 borderRadius: 10,
-                obscureText: hidePassword,
+                obscureText: hidepsswrd,
                 suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        hidePassword = !hidePassword;
+                        hidepsswrd = !hidepsswrd;
                       });
                     },
                     color: Colors.white.withOpacity(0.7),
-                    icon: Icon(hidePassword
-                        ? Icons.visibility_off
-                        : Icons.visibility))),
+                    icon: Icon(
+                        hidepsswrd ? Icons.visibility_off : Icons.visibility))),
           ),
           Align(
               alignment: Alignment.bottomRight,
@@ -150,14 +152,14 @@ class _LogInScreenState extends State<LogInScreen> {
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                            text: 'Forget Password ?',
+                            text: 'Forget password ?',
                             style: TextStyle(
                               color: Colors.white,
                               decoration: TextDecoration.underline,
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                print("Forget Password");
+                                print("Forget password");
                               })
                       ]),
                 ),
@@ -168,7 +170,42 @@ class _LogInScreenState extends State<LogInScreen> {
           Center(
             child: FormHelper.submitButton(
               "Login",
-              () {},
+              () {
+                if (validateAndSave()) {
+                  setState(() {
+                    isAPIcallProcess = true;
+                  });
+
+                  LoginRequestModel model = LoginRequestModel(
+                    email: email,
+                    password: psswrd,
+                  );
+
+                  APIService.login(model).then(
+                    (response) {
+                      setState(() {
+                        isAPIcallProcess = false;
+                      });
+
+                      if (response) {
+                        Navigator.of(context).pushNamed(
+                          '/dashboard',
+                        );
+                      } else {
+                        FormHelper.showSimpleAlertDialog(
+                          context,
+                          Config.appName,
+                          "Invalid email/password !!",
+                          "OK",
+                          () {
+                            Navigator.of(context).pop();
+                          },
+                        );
+                      }
+                    },
+                  );
+                }
+              },
               btnColor: HexColor("#283B71"),
               borderColor: Colors.white,
               txtColor: Colors.white,
@@ -221,5 +258,14 @@ class _LogInScreenState extends State<LogInScreen> {
         ],
       ),
     );
+  }
+
+  bool validateAndSave() {
+    final form = globalFormKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
   }
 }

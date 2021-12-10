@@ -92,11 +92,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           FormHelper.inputFieldWidget(
             context,
             const Icon(Icons.person),
-            "email",
-            "Email",
+            "name",
+            "Name",
             (onValidateVal) {
               if (onValidateVal.isEmpty) {
-                return "Email can\'t be empty";
+                return "Name can\'t be empty";
               }
               return null;
             },
@@ -109,6 +109,54 @@ class _SignUpScreenState extends State<SignUpScreen> {
             textColor: Colors.white,
             hintColor: Colors.white.withOpacity(0.6),
             borderRadius: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: FormHelper.inputFieldWidget(
+              context,
+              const Icon(Icons.person),
+              "last name",
+              "Last Name",
+              (onValidateVal) {
+                if (onValidateVal.isEmpty) {
+                  return "Last Name can\'t be empty";
+                }
+                return null;
+              },
+              (onSaveVal) {
+                email = onSaveVal;
+              },
+              borderFocusColor: Colors.white,
+              prefixIconColor: Colors.white,
+              borderColor: Colors.white,
+              textColor: Colors.white,
+              hintColor: Colors.white.withOpacity(0.6),
+              borderRadius: 10,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: FormHelper.inputFieldWidget(
+              context,
+              const Icon(Icons.person),
+              "email",
+              "Email",
+              (onValidateVal) {
+                if (onValidateVal.isEmpty) {
+                  return "Email can\'t be empty";
+                }
+                return null;
+              },
+              (onSaveVal) {
+                email = onSaveVal;
+              },
+              borderFocusColor: Colors.white,
+              prefixIconColor: Colors.white,
+              borderColor: Colors.white,
+              textColor: Colors.white,
+              hintColor: Colors.white.withOpacity(0.6),
+              borderRadius: 10,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10),
