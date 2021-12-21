@@ -4,4 +4,7 @@ class Config {
   static const String loginAPI = "/users/signin";
   static const String signupAPI = "/users/signup";
   static const String userprofileAPI = "/users";
+  static const String getFlatsAPI = "/flats";
+  static const String getQuestionsAPI = "/questions";
+  static const String getAnswersAPI = "/answers";
 }

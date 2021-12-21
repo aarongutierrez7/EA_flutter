@@ -120,25 +120,29 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                          elevation: 4,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Image.network(
-                                  'https://cdn-icons-png.flaticon.com/512/3820/3820102.png',
-                                  height: 150,
+                        GestureDetector(
+                          onTap: () =>
+                              Navigator.of(context).pushNamed('/forum'),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            elevation: 4,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Image.network(
+                                    'https://cdn-icons-png.flaticon.com/512/3820/3820102.png',
+                                    height: 150,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                'Forum',
-                                style: cardTextStyle,
-                              )
-                            ],
+                                Text(
+                                  'Forum',
+                                  style: cardTextStyle,
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         Card(
@@ -183,22 +187,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                          elevation: 4,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Image.network(
-                                'https://cdn-icons-png.flaticon.com/512/2286/2286105.png',
-                                height: 150,
-                              ),
-                              Text(
-                                'Housing',
-                                style: cardTextStyle,
-                              )
-                            ],
+                        GestureDetector(
+                          onTap: () =>
+                              Navigator.of(context).pushNamed('/flats'),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            elevation: 4,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Image.network(
+                                  'https://cdn-icons-png.flaticon.com/512/2286/2286105.png',
+                                  height: 150,
+                                ),
+                                Text(
+                                  'Housing',
+                                  style: cardTextStyle,
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         Card(

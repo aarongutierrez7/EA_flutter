@@ -46,17 +46,18 @@ class _NavBarState extends State<NavBar> {
           ListTile(
             leading: Icon(Icons.group),
             title: Text('Forum'),
-            onTap: () => null,
+            onTap: () => Navigator.of(context).pushNamed('/forum'),
           ),
           ListTile(
             leading: Icon(Icons.chat),
             title: Text('Chat'),
           ),
           ListTile(
-            leading: Icon(Icons.bedroom_child_outlined),
-            title: Text('Housing'),
-            onTap: () => null,
-          ),
+              leading: Icon(Icons.bedroom_child_outlined),
+              title: Text('Housing'),
+              onTap: () => Navigator.of(context).pushNamed(
+                    '/flats',
+                  )),
           ListTile(
             leading: Icon(Icons.book),
             title: Text('Teachers'),

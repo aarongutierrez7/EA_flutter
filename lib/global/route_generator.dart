@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project/screens/flats_screen.dart';
+import 'package:flutter_project/screens/forum_screen.dart';
 import 'package:flutter_project/screens/login_screen.dart';
 import 'package:flutter_project/screens/signup_screen.dart';
 import 'package:flutter_project/screens/menu_screen.dart';
@@ -20,6 +22,12 @@ class RouteGenerator {
       case '/signup':
         // Validation of correct data type
         return MaterialPageRoute(builder: (_) => SignUpScreen());
+      case '/flats':
+        // Validation of correct data type
+        return MaterialPageRoute(builder: (_) => FlatsScreen());
+      case '/forum':
+        // Validation of correct data type
+        return MaterialPageRoute(builder: (_) => ForumScreen());
       /*case '/sidebar':
         // Validation of correct data type
         return MaterialPageRoute(builder: (_) => NavBar(user: null,));*/
