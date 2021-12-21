@@ -1,16 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project/models/login_response_model.dart';
 import 'package:flutter_project/screens/menu_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_project/screens/menu_screen.dart';
+import 'package:snippet_coder_utils/hex_color.dart';
 
 class HomeScreen extends StatefulWidget {
+  final LoginResponseModel res;
+
+  const HomeScreen({
+    Key? key,
+    required this.res,
+  }) : super(key: key);
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreenState createState() => _HomeScreenState(res);
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final LoginResponseModel response;
+
+  _HomeScreenState(this.response);
   @override
   Widget build(BuildContext context) {
     // to get size
@@ -23,11 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Color.fromRGBO(63, 63, 63, 1));
 
     return Scaffold(
-      drawer: NavBar(),
+      drawer: NavBar(
+        user: response,
+      ),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(255, 255, 255, 0),
+        backgroundColor: HexColor("#007CC1"), //Color.fromRGBO(0, 124, 193, 0),
         title: Text(
           'NewStudent',
+          textAlign: TextAlign.center,
         ),
       ),
       body: Stack(
@@ -37,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                   alignment: Alignment.topCenter,
+                  fit: BoxFit.fill,
                   image: AssetImage('assets/images/profile-bg3.jpg')),
             ),
           ),
@@ -54,8 +68,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: <Widget>[
                         CircleAvatar(
                           radius: 32,
-                          backgroundImage: NetworkImage(
-                              'https://i.pinimg.com/originals/78/07/03/78070395106fcd1c3e66e3b3810568bb.jpg'),
+                          backgroundImage:
+                              NetworkImage(widget.res.result.picture),
                         ),
                         SizedBox(
                           width: 16,
@@ -65,13 +79,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'John Richardo',
+                              widget.res.result.name,
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
+                                  TextStyle(color: Colors.black, fontSize: 20),
                             ),
-                            Text('4101410141',
+                            Text(widget.res.result.lastName,
                                 style: TextStyle(
-                                    fontSize: 14, color: Colors.white))
+                                    fontSize: 14, color: Colors.black))
                           ],
                         )
                       ],
@@ -91,12 +105,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SvgPicture.network(
-                                'https://www.svgrepo.com/show/73504/teacher.svg',
-                                height: 128,
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Image.network(
+                                  'https://cdn-icons-png.flaticon.com/512/709/709579.png',
+                                  fit: BoxFit.contain,
+                                  height: 150,
+                                ),
                               ),
                               Text(
-                                'Personal Data',
+                                'Profile',
                                 style: cardTextStyle,
                               )
                             ],
@@ -109,12 +127,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SvgPicture.network(
-                                'https://image.flaticon.com/icons/svg/1904/1904565.svg',
-                                height: 128,
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Image.network(
+                                  'https://cdn-icons-png.flaticon.com/512/3820/3820102.png',
+                                  height: 150,
+                                ),
                               ),
                               Text(
-                                'Course Schedule',
+                                'Forum',
                                 style: cardTextStyle,
                               )
                             ],
@@ -127,12 +148,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SvgPicture.network(
-                                'https://image.flaticon.com/icons/svg/1904/1904527.svg',
-                                height: 128,
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Image.network(
+                                  'https://cdn-icons-png.flaticon.com/512/3534/3534065.png',
+                                  height: 150,
+                                ),
                               ),
                               Text(
-                                'Attendance Recap',
+                                'Lessons',
                                 style: cardTextStyle,
                               )
                             ],
@@ -145,12 +169,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SvgPicture.network(
-                                'https://image.flaticon.com/icons/svg/1904/1904437.svg',
-                                height: 128,
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Image.network(
+                                  'https://cdn-icons.flaticon.com/png/512/3193/premium/3193015.png?token=exp=1640090819~hmac=2c9a41348c770cf7a3f35d0d19171048',
+                                  height: 150,
+                                ),
                               ),
                               Text(
-                                'Study Result',
+                                'Chat',
                                 style: cardTextStyle,
                               )
                             ],
@@ -163,12 +190,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SvgPicture.network(
-                                'https://image.flaticon.com/icons/svg/1904/1904235.svg',
-                                height: 128,
+                              Image.network(
+                                'https://cdn-icons-png.flaticon.com/512/2286/2286105.png',
+                                height: 150,
                               ),
                               Text(
-                                'Course Booking',
+                                'Housing',
                                 style: cardTextStyle,
                               )
                             ],
@@ -181,12 +208,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SvgPicture.network(
-                                'https://image.flaticon.com/icons/svg/1904/1904221.svg',
-                                height: 128,
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Image.network(
+                                  'https://cdn-icons.flaticon.com/png/512/3183/premium/3183583.png?token=exp=1640090381~hmac=0daecf6cf7b79123ccf23600992956d9',
+                                  height: 150,
+                                ),
                               ),
                               Text(
-                                'Course Plan',
+                                'Teachers',
                                 style: cardTextStyle,
                               )
                             ],

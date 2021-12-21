@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "725951546703",
+    "project_id": "decisive-fold-335411",
+    "storage_bucket": "decisive-fold-335411.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725951546703:android:fa4d115b0c74fbb242f13a",
+        "android_client_info": {
+          "package_name": "com.example.flutter_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725951546703-c2vgcn8pl27ehio1h2ehov36dokor8od.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_project",
+            "certificate_hash": "0ba1ab5f539a4c03d7669add1782b04bc1daabbc"
+          }
+        },
+        {
+          "client_id": "725951546703-5gpjmn23c6hrl5hkjtcngleh0hlpmbf0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw5IYvfq5j8t58a2x2ZvgJGTUMPR6bNow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725951546703-5gpjmn23c6hrl5hkjtcngleh0hlpmbf0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

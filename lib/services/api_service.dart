@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_project/config.dart';
+import 'package:flutter_project/global/config.dart';
 import 'package:flutter_project/models/login_request_model.dart';
 import 'package:flutter_project/models/login_response_model.dart';
 import 'package:flutter_project/models/signup_request_model.dart';
@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 class APIService {
   static var client = http.Client();
 
-  static Future<bool> login(
+  static Future<LoginResponseModel> login(
     LoginRequestModel model,
   ) async {
     Map<String, String> requestHeaders = {
@@ -21,7 +21,6 @@ class APIService {
       Config.apiURL,
       Config.loginAPI,
     );
-    print("Peticio login");
 
     var response = await client.post(
       url,
@@ -31,22 +30,20 @@ class APIService {
     print(response.statusCode);
 
     if (response.statusCode == 200) {
-      await SharedService.setLoginDetails(
+      /*await SharedService.setLoginDetails(
         loginResponseJson(
           response.body,
         ),
-      );
+      );*/
 
-      print(response.statusCode);
-
-      return true;
+      return loginResponseJson(response.body);
     } else {
-      return false;
+      return loginResponseJson("");
     }
   }
 
   static Future<SignUpResponseModel> register(
-    SignUpResponseModel model,
+    SignUpRequestModel model,
   ) async {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
@@ -62,7 +59,6 @@ class APIService {
       headers: requestHeaders,
       body: jsonEncode(model.toJson()),
     );
-
     return signupResponseJson(
       response.body,
     );

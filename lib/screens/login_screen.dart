@@ -1,8 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/gestures.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project/config.dart';
+import 'package:flutter_project/components/ordivider.dart';
+import 'package:flutter_project/models/login_response_model.dart';
+import 'package:flutter_project/screens/dashboard_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_project/global/config.dart';
 import 'package:flutter_project/models/login_request_model.dart';
 import 'package:flutter_project/services/api_service.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -22,12 +27,13 @@ class _LogInScreenState extends State<LogInScreen> {
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
   String? email;
   String? psswrd;
+  late LoginResponseModel response;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: HexColor("#283B71"),
+          backgroundColor: HexColor("#007CC1"),
           body: ProgressHUD(
             child: Form(
               key: globalFormKey,
@@ -48,7 +54,7 @@ class _LogInScreenState extends State<LogInScreen> {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 4,
+            height: MediaQuery.of(context).size.height / 3,
             decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -187,10 +193,18 @@ class _LogInScreenState extends State<LogInScreen> {
                         isAPIcallProcess = false;
                       });
 
-                      if (response) {
-                        Navigator.of(context).pushNamed(
+                      if (response != "") {
+                        /*Navigator.of(context).pushNamed(
                           '/dashboard',
-                        );
+                        );*/
+                        print(response.result.name);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(
+                                res: response,
+                              ),
+                            ));
                       } else {
                         FormHelper.showSimpleAlertDialog(
                           context,
@@ -206,7 +220,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   );
                 }
               },
-              btnColor: HexColor("#283B71"),
+              btnColor: HexColor("#007CC1"),
               borderColor: Colors.white,
               txtColor: Colors.white,
               borderRadius: 10,
@@ -215,16 +229,20 @@ class _LogInScreenState extends State<LogInScreen> {
           SizedBox(
             height: 20,
           ),
-          Center(
-            child: Text(
-              "OR",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                color: Colors.white,
-              ),
-            ),
+          Center(child: OrDivider()),
+          SizedBox(
+            height: 20,
           ),
+          Center(
+              child: IconButton(
+            icon: Image.asset("assets/images/indice.png"),
+            iconSize: 50,
+            onPressed: () async {
+              await signInWithGoogle();
+
+              setState(() {});
+            },
+          )),
           SizedBox(
             height: 20,
           ),
@@ -255,6 +273,9 @@ class _LogInScreenState extends State<LogInScreen> {
                       ]),
                 ),
               )),
+          SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );
@@ -267,5 +288,25 @@ class _LogInScreenState extends State<LogInScreen> {
       return true;
     }
     return false;
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    //userEmail = googleUser.email;
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

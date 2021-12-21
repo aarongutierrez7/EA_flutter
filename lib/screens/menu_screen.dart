@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/models/login_response_model.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({Key? key}) : super(key: key);
+  final LoginResponseModel user;
+  const NavBar({Key? key, required this.user}) : super(key: key);
   @override
   State<NavBar> createState() => _NavBarState();
 }
@@ -15,49 +17,49 @@ class _NavBarState extends State<NavBar> {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text('Aarón'),
-            accountEmail: Text('aaron@gmail.com'),
+            accountName: Text(widget.user.result.name),
+            accountEmail: Text(widget.user.result.email),
             currentAccountPicture: CircleAvatar(
-              child: ClipOval(
-                child: Image.asset("assets/images/girl-profile.png",
-                    fit: BoxFit.cover, width: 90, height: 90),
+              child: CircleAvatar(
+                radius: 32,
+                backgroundColor: Colors.white,
+                backgroundImage: NetworkImage(widget.user.result.picture),
               ),
             ),
-            decoration: BoxDecoration(
-              color: Colors.blue,
+            decoration: const BoxDecoration(
+              color: Colors.white,
               image: DecorationImage(
                   fit: BoxFit.fill,
                   image: AssetImage("assets/images/profile-bg3.jpg")),
             ),
           ),
           ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text('Favorites'),
+            leading: Icon(Icons.home),
+            title: Text('Home'),
             onTap: () => null,
           ),
           ListTile(
             leading: Icon(Icons.person),
-            title: Text('Friends'),
+            title: Text('Profile'),
             onTap: () => null,
           ),
           ListTile(
-            leading: Icon(Icons.share),
-            title: Text('Share'),
+            leading: Icon(Icons.group),
+            title: Text('Forum'),
             onTap: () => null,
           ),
           ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text('Request'),
+            leading: Icon(Icons.chat),
+            title: Text('Chat'),
           ),
-          Divider(),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            leading: Icon(Icons.bedroom_child_outlined),
+            title: Text('Housing'),
             onTap: () => null,
           ),
           ListTile(
-            leading: Icon(Icons.description),
-            title: Text('Policies'),
+            leading: Icon(Icons.book),
+            title: Text('Teachers'),
             onTap: () => null,
           ),
           Divider(),

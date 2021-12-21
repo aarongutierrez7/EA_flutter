@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/route_generator.dart';
+import 'package:flutter_project/global/route_generator.dart';
 import 'package:flutter_project/screens/login_screen.dart';
 
 void main() {

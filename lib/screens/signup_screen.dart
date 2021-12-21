@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project/global/config.dart';
+import 'package:flutter_project/models/signup_request_model.dart';
+import 'package:flutter_project/services/api_service.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
@@ -15,9 +18,11 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  bool isAPIcallProcess = false;
+  bool isAPICallProcess = false;
   bool hidePassword = true;
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
+  String? name;
+  String? lastName;
   String? email;
   String? password;
   String? passwordRepeat;
@@ -32,7 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               key: globalFormKey,
               child: _signupUI(context),
             ),
-            inAsyncCall: isAPIcallProcess,
+            inAsyncCall: isAPICallProcess,
             opacity: 0.3,
             key: UniqueKey(),
           )),
@@ -101,7 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               return null;
             },
             (onSaveVal) {
-              email = onSaveVal;
+              name = onSaveVal;
             },
             borderFocusColor: Colors.white,
             prefixIconColor: Colors.white,
@@ -124,7 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 return null;
               },
               (onSaveVal) {
-                email = onSaveVal;
+                lastName = onSaveVal;
               },
               borderFocusColor: Colors.white,
               prefixIconColor: Colors.white,
@@ -188,16 +193,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ? Icons.visibility_off
                         : Icons.visibility))),
           ),
-          Padding(
+          /* Padding(
             padding: const EdgeInsets.only(top: 10),
             child: FormHelper.inputFieldWidget(context, const Icon(Icons.lock),
                 "passwordRepeat", "Repeat Password", (onValidateVal) {
               if (onValidateVal.isEmpty) {
                 return "Password can\'t be empty";
+              } else if (passwordRepeat != password) {
+                return "Password should be the same!";
               }
               return null;
             }, (onSaveVal) {
-              password = onSaveVal;
+              passwordRepeat = onSaveVal;
             },
                 borderFocusColor: Colors.white,
                 prefixIconColor: Colors.white,
@@ -216,15 +223,64 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     icon: Icon(hidePassword
                         ? Icons.visibility_off
                         : Icons.visibility))),
-          ),
+          ),*/
           SizedBox(
             height: 20,
           ),
           Center(
             child: FormHelper.submitButton(
-              "Sign Up",
-              () {},
-              btnColor: HexColor("#283B71"),
+              "Register",
+              () {
+                if (validateAndSave()) {
+                  setState(() {
+                    isAPICallProcess = true;
+                  });
+
+                  SignUpRequestModel model = SignUpRequestModel(
+                    name: name,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                  );
+
+                  APIService.register(model).then(
+                    (response) {
+                      setState(() {
+                        isAPICallProcess = false;
+                      });
+
+                      print("ha devuelto algo");
+
+                      if (response.result != null) {
+                        print("RESULTADO NO NULO");
+                        FormHelper.showSimpleAlertDialog(
+                          context,
+                          Config.appName,
+                          "Registration Successful. Please login to the account",
+                          "OK",
+                          () {
+                            Navigator.of(context).pushNamed(
+                              '/dashboard',
+                            );
+                          },
+                        );
+                      } else {
+                        print("RESULTADO NULO");
+                        FormHelper.showSimpleAlertDialog(
+                          context,
+                          Config.appName,
+                          "Register is wrong!",
+                          "OK",
+                          () {
+                            Navigator.of(context).pop();
+                          },
+                        );
+                      }
+                    },
+                  );
+                }
+              },
+              btnColor: HexColor("283B71"),
               borderColor: Colors.white,
               txtColor: Colors.white,
               borderRadius: 10,
@@ -236,5 +292,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ],
       ),
     );
+  }
+
+  bool validateAndSave() {
+    final form = globalFormKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
   }
 }

@@ -20,12 +20,12 @@ class RouteGenerator {
       case '/signup':
         // Validation of correct data type
         return MaterialPageRoute(builder: (_) => SignUpScreen());
-      case '/sidebar':
+      /*case '/sidebar':
         // Validation of correct data type
-        return MaterialPageRoute(builder: (_) => NavBar());
-      case '/dashboard':
+        return MaterialPageRoute(builder: (_) => NavBar(user: null,));*/
+      /*case '/dashboard':
         // Validation of correct data type
-        return MaterialPageRoute(builder: (_) => HomeScreen());
+        return MaterialPageRoute(builder: (_) => HomeScreen());*/
 
       // If args is not of the correct type, return an error page.
       // You can also throw an exception while in development.
