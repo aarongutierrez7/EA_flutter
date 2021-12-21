@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: HexColor("#007CC1"), //Color.fromRGBO(0, 124, 193, 0),
         title: Text(
-          'NewStudent',
+          'NewStudent2',
           textAlign: TextAlign.center,
         ),
       ),
