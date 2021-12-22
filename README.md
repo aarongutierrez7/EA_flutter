@@ -1,16 +1,9 @@
-# flutter_project
+El flujo de trabajo utilizado con Git ha sido el siguiente:
 
-A new Flutter project.
+git checkout -b minim2  --> se crea una nueva rama llamada "minim2" y se cambia hace el cambio hacia ésta (todavia en local).
 
-## Getting Started
+git add . --> se añaden los cambios realizados sobre el proyecto a la rama "minim2".
 
-This project is a starting point for a Flutter application.
+git commit -m "primer commit" --> se realiza un commit dentro de la rama "minim2".
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+git push --> se sube la rama (junto con el commit realizado) al repositorio remoto de GitHub, creando una nueva rama llamada igual "minim2".
