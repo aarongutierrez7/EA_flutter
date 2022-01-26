@@ -1,11 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/global/config.dart';
-import 'package:flutter_project/models/signup_request_model.dart';
-import 'package:flutter_project/services/api_service.dart';
+import 'package:flutter_project/models/API/signup_request_model.dart';
+import 'package:flutter_project/screens/Signup/signup_logic.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
@@ -31,7 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: HexColor("#283B71"),
+          backgroundColor: HexColor("#1C3144"),
           body: ProgressHUD(
             child: Form(
               key: globalFormKey,
@@ -71,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: Image.asset(
-                    "assets/images/Logo_upc.png",
+                    "assets/images/new-student.png",
                     width: 175,
                     fit: BoxFit.contain,
                   ),
@@ -243,7 +243,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     password: password,
                   );
 
-                  APIService.register(model).then(
+                  SignUpService.register(model).then(
                     (response) {
                       setState(() {
                         isAPICallProcess = false;
@@ -260,7 +260,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           "OK",
                           () {
                             Navigator.of(context).pushNamed(
-                              '/dashboard',
+                              '/login',
                             );
                           },
                         );
@@ -280,7 +280,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   );
                 }
               },
-              btnColor: HexColor("283B71"),
+              btnColor: HexColor("#1C3144"),
               borderColor: Colors.white,
               txtColor: Colors.white,
               borderRadius: 10,

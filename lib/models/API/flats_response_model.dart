@@ -5,27 +5,27 @@ FlatsResponseModel flatsResponseJson(String str) =>
 
 class FlatsResponseModel {
   FlatsResponseModel({
-    required this.id,
-    required this.name,
-    required this.address,
-    required this.description,
-    required this.creator,
-    required this.price,
-    required this.lat,
-    required this.lng,
-    required this.V,
-    required this.picture,
+    this.id,
+    this.name,
+    this.address,
+    this.description,
+    this.creator,
+    this.price,
+    this.lat,
+    this.lng,
+    this.V,
+    this.picture,
   });
-  late final String id;
-  late final String name;
-  late final String address;
-  late final String description;
-  late final String creator;
-  late final int price;
-  late final double lat;
-  late final double lng;
-  late final int V;
-  late final String picture;
+  late String? id;
+  late String? name;
+  late String? address;
+  late String? description;
+  late String? creator;
+  late int? price;
+  late num? lat;
+  late num? lng;
+  late int? V;
+  late String? picture;
 
   FlatsResponseModel.fromJson(Map<String, dynamic> json) {
     id = json['_id'];

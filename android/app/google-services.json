@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "725951546703",
-    "project_id": "decisive-fold-335411",
-    "storage_bucket": "decisive-fold-335411.appspot.com"
+    "project_number": "128944789658",
+    "project_id": "oauth-ea",
+    "storage_bucket": "oauth-ea.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:725951546703:android:fa4d115b0c74fbb242f13a",
+        "mobilesdk_app_id": "1:128944789658:android:e6c06cc535172231682723",
         "android_client_info": {
           "package_name": "com.example.flutter_project"
         }
       },
       "oauth_client": [
         {
-          "client_id": "725951546703-c2vgcn8pl27ehio1h2ehov36dokor8od.apps.googleusercontent.com",
+          "client_id": "128944789658-078u56iqnehcm4hkq2orn34fsa8s20da.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.flutter_project",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "725951546703-5gpjmn23c6hrl5hkjtcngleh0hlpmbf0.apps.googleusercontent.com",
+          "client_id": "128944789658-06gp4b6v4niqpga37cvhd4d61hc6khe2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBw5IYvfq5j8t58a2x2ZvgJGTUMPR6bNow"
+          "current_key": "AIzaSyAuczIgRG1aabXMdrd3h_bxNd5hHpVc7W0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "725951546703-5gpjmn23c6hrl5hkjtcngleh0hlpmbf0.apps.googleusercontent.com",
+              "client_id": "128944789658-06gp4b6v4niqpga37cvhd4d61hc6khe2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

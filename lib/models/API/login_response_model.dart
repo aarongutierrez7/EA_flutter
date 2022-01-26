@@ -9,6 +9,7 @@ class LoginResponseModel {
     required this.result,
     required this.token,
   });
+
   late final Result result;
   late final String token;
 
@@ -32,7 +33,7 @@ class Result with ChangeNotifier {
     required this.lastName,
     required this.email,
     required this.password,
-    required this.picture,
+    this.picture,
     required this.subjects,
     required this.V,
   });
@@ -41,7 +42,7 @@ class Result with ChangeNotifier {
   late final String lastName;
   late final String email;
   late final String password;
-  late final String picture;
+  late String? picture;
   late final List<dynamic> subjects;
   late final int V;
 

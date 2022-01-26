@@ -1,15 +1,19 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names
 
 import 'package:flutter/gestures.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/components/ordivider.dart';
-import 'package:flutter_project/models/login_response_model.dart';
-import 'package:flutter_project/screens/dashboard_screen.dart';
+import 'package:flutter_project/models/API/login_response_model.dart';
+import 'package:flutter_project/providers/google_signin_provider.dart';
+import 'package:flutter_project/screens/Dashboard/dashboard_UI.dart';
+import 'package:flutter_project/screens/Login/login_logic.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_project/global/config.dart';
-import 'package:flutter_project/models/login_request_model.dart';
-import 'package:flutter_project/services/api_service.dart';
+import 'package:flutter_project/models/Data/user_model.dart';
+import 'package:flutter_project/models/API/login_request_model.dart';
+import 'package:provider/provider.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
@@ -33,7 +37,7 @@ class _LogInScreenState extends State<LogInScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: HexColor("#007CC1"),
+          backgroundColor: HexColor("#1C3144"),
           body: ProgressHUD(
             child: Form(
               key: globalFormKey,
@@ -54,7 +58,7 @@ class _LogInScreenState extends State<LogInScreen> {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 3,
+            height: MediaQuery.of(context).size.height / 4,
             decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -73,7 +77,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: Image.asset(
-                    "assets/images/Logo_upc.png",
+                    "assets/images/new-student.png",
                     width: 175,
                     fit: BoxFit.contain,
                   ),
@@ -84,8 +88,8 @@ class _LogInScreenState extends State<LogInScreen> {
           Padding(
             padding: const EdgeInsets.only(
               left: 20,
-              bottom: 30,
-              top: 50,
+              bottom: 20,
+              top: 20,
             ),
             child: Text(
               "Login",
@@ -186,41 +190,32 @@ class _LogInScreenState extends State<LogInScreen> {
                     email: email,
                     password: psswrd,
                   );
+                  LoginService.login(model).then((response) {
+                    setState(() {
+                      isAPIcallProcess = false;
+                    });
 
-                  APIService.login(model).then(
-                    (response) {
-                      setState(() {
-                        isAPIcallProcess = false;
-                      });
-
-                      if (response != "") {
-                        /*Navigator.of(context).pushNamed(
-                          '/dashboard',
-                        );*/
-                        print(response.result.name);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeScreen(
-                                res: response,
-                              ),
-                            ));
-                      } else {
-                        FormHelper.showSimpleAlertDialog(
+                    if (response) {
+                      Navigator.push(
                           context,
-                          Config.appName,
-                          "Invalid email/password !!",
-                          "OK",
-                          () {
-                            Navigator.of(context).pop();
-                          },
-                        );
-                      }
-                    },
-                  );
+                          MaterialPageRoute(
+                            builder: (context) => DashboardScreen(),
+                          ));
+                    } else {
+                      FormHelper.showSimpleAlertDialog(
+                        context,
+                        Config.appName,
+                        "Invalid email/password !!",
+                        "OK",
+                        () {
+                          Navigator.of(context).pop();
+                        },
+                      );
+                    }
+                  });
                 }
               },
-              btnColor: HexColor("#007CC1"),
+              btnColor: HexColor("#1C3144"),
               borderColor: Colors.white,
               txtColor: Colors.white,
               borderRadius: 10,
@@ -231,25 +226,30 @@ class _LogInScreenState extends State<LogInScreen> {
           ),
           Center(child: OrDivider()),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
           Center(
-              child: IconButton(
-            icon: Image.asset("assets/images/indice.png"),
-            iconSize: 50,
-            onPressed: () async {
-              await signInWithGoogle();
-
-              setState(() {});
-            },
-          )),
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  onPrimary: Colors.black,
+                  minimumSize: Size(100, 50)),
+              icon: FaIcon(FontAwesomeIcons.google, color: Colors.red),
+              label: Text("Sign up with Google"),
+              onPressed: () {
+                final provider =
+                    Provider.of<GoogleSignInProvider>(context, listen: false);
+                provider.googleLogin();
+              },
+            ),
+          ),
           SizedBox(
             height: 20,
           ),
           Align(
               alignment: Alignment.center,
               child: Padding(
-                padding: const EdgeInsets.only(right: 25, top: 10),
+                padding: const EdgeInsets.only(right: 25, bottom: 15),
                 child: RichText(
                   text: TextSpan(
                       style: const TextStyle(
@@ -290,7 +290,7 @@ class _LogInScreenState extends State<LogInScreen> {
     return false;
   }
 
-  Future<UserCredential> signInWithGoogle() async {
+  /*Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -308,5 +308,5 @@ class _LogInScreenState extends State<LogInScreen> {
 
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
+  }*/
 }
